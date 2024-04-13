@@ -1,6 +1,10 @@
 import socket
 import threading 
 from commonFunctions import *
+from Crypto.Cipher import AES
+from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad,unpad
 
 
 
@@ -12,18 +16,16 @@ class ElGamal:
         return 333, 444
     
     @staticmethod
-    def encrypt(message):
-        return message
-
+    def generate_key_from_password():
+        # Generate a key from a password
+        salt = get_random_bytes(16)
+        key = salt
+        print(key)
+        return key
+    
     @staticmethod
     def verify(message):
-        return False
-
-    @staticmethod
-    def decrypt(message):
-        return message
-        
-
+        return True
 
 
 def server():
@@ -54,42 +56,21 @@ def server():
     
     # Generate a public and private key
     public_key, private_key = ElGamal.generate_keys()
-
-
+    key=ElGamal.generate_key_from_password()
     # Receive the secret key from the server
     secret_key=int(c.recv(2048).decode("utf-8").split("\n")[0])
-    print("You received : ",secret_key)
+    print("You received public key from Alice: ",secret_key)
 
     # Send the public key to the client
     c.sendall(str(public_key).encode())
-    print("You sent : ",public_key)
+    print("You sent public key to Alice: ",public_key)
 
-
-    threading.Thread(target=send_msg, args=(c,)).start()
-    threading.Thread(target=receive_msg, args=(c,)).start()
-    # send(c)
+    send_key(c,key)
+    threading.Thread(target=send_msg, args=(c,key)).start()
+    threading.Thread(target=receive_msg, args=(c,key)).start()
     # c.close()
 
-def send_msg(c):
-    while 1:
-        # Send messages from the client
-        message = input()
-        message = ElGamal.encrypt(message).encode()
-        c.sendall(message)
 
-def receive_msg(c):
-    while 1:
-        # Listen for messages from the client
-        message=c.recv(2048).decode("utf-8")
-        if message == "exit":
-            print("the connection is closed")
-            break
-        if ElGamal.verify(message)==False:
-            print("Untrusted Connection")
-            c.sendall("exit".encode())
-            break
-        print("You RECEIVED:",ElGamal.decrypt(message))
-    c.close() 
 
 
 if __name__ == "__main__":
