@@ -7,6 +7,7 @@ from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad,unpad
+from DH import *
 
 class ElGamal:
     __init__ = None
@@ -23,6 +24,9 @@ class ElGamal:
 
 
 def client():
+    q,pr=readFile()
+    x=readX(q)
+    y=publicKey(x,pr,q)
     # Get the hostname of the server
     host = socket.gethostname()
 
@@ -43,16 +47,16 @@ def client():
     public_key, private_key = ElGamal.generate_keys()
 
     # Send the public key to the server
-    s.sendall(str(public_key).encode())
-    print("You sent to Bob : ",public_key)
+    s.sendall(str(y).encode())
+    print("You sent to Bob : ",y)
 
     # Receive the public key from the client
-    secret_key=int(s.recv(2048).decode("utf-8"))
-    print("You received from Bob: ",secret_key)
-    key=s.recv(2048)
-    print("key Encryption received : ",key)
-    print("from the client the type",type(key))
-    print("from the client the size",len(key))
+    public_key_yb=int(s.recv(2048).decode("utf-8"))
+    print("You received from Bob: ",public_key_yb)
+    ka=symmetricKey(x,public_key_yb,q)
+    print("Your symmetric DH key: ",ka)
+    key=generate_key_from_password(ka,ka)
+    print("key AES Encryption received : ",key)
     threading.Thread(target=send_msg, args=(s,key)).start()
     threading.Thread(target=receive_msg, args=(s,key)).start()
     # s.close()

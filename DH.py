@@ -32,10 +32,15 @@
 #     break
 
 
-with open("publickeys.txt", "r") as file:
-    keys = file.read().split()
-    q = int(keys[0])
-    pr = int(keys[1])
+
+    
+    
+def readFile():
+    with open("publickeys.txt", "r") as file:
+        keys = file.read().split()
+        q = int(keys[0])
+        pr = int(keys[1])
+    return q,pr
 
 def publicKey(x,pr,q):
     y=pow(pr,x)%q #alic public key
@@ -44,13 +49,23 @@ def publicKey(x,pr,q):
 def symmetricKey(x,y,q):
     k=pow(y,x)%q #symmetric private key
     return k
-
-ya=publicKey(4,pr,q)
-yb=publicKey(3,pr,q)
-ka=symmetricKey(4,yb,q)
-kb=symmetricKey(3,ya,q)
-print("Ka: %s"%ka)
-print("Kb: %s"%kb)
+def readX(q):
+    while(1):
+        x=int(input("Enter your private key: "))
+        if isinstance(x,int)==False and x>=q:
+            print("Invalid private key")
+            break
+        else:
+            x=int(x)
+            return x
+    
+    
+# ya=publicKey(4,pr,q)
+# yb=publicKey(3,pr,q)
+# ka=symmetricKey(4,yb,q)
+# kb=symmetricKey(3,ya,q)
+# print("Ka: %s"%ka)
+# print("Kb: %s"%kb)
     
     
 

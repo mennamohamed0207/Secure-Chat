@@ -5,6 +5,7 @@ from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad,unpad
+from DH import *
 
 
 
@@ -15,13 +16,7 @@ class ElGamal:
     def generate_keys():
         return 333, 444
     
-    @staticmethod
-    def generate_key_from_password():
-        # Generate a key from a password
-        salt = get_random_bytes(16)
-        key = salt
-        print(key)
-        return key
+   
     
     @staticmethod
     def verify(message):
@@ -29,6 +24,9 @@ class ElGamal:
 
 
 def server():
+    q,pr=readFile()
+    x=readX(q)
+    y=publicKey(x,pr,q)
     # Get the hostname of the server
     host = socket.gethostname()
 
@@ -56,16 +54,17 @@ def server():
     
     # Generate a public and private key
     public_key, private_key = ElGamal.generate_keys()
-    key=ElGamal.generate_key_from_password()
     # Receive the secret key from the server
-    secret_key=int(c.recv(2048).decode("utf-8").split("\n")[0])
-    print("You received public key from Alice: ",secret_key)
-
+    public_key_ya=int(c.recv(2048).decode("utf-8").split("\n")[0])
+    print("You received public key from Alice: ",public_key_ya)
+    kb=symmetricKey(x,public_key_ya,q)
+    print("Your symmetric DH key: ",kb)
+    key=generate_key_from_password(kb,kb)
+    print("Your AES encryption key: ",key)
     # Send the public key to the client
-    c.sendall(str(public_key).encode())
+    c.sendall(str(y).encode())
     print("You sent public key to Alice: ",public_key)
 
-    send_key(c,key)
     threading.Thread(target=send_msg, args=(c,key)).start()
     threading.Thread(target=receive_msg, args=(c,key)).start()
     # c.close()

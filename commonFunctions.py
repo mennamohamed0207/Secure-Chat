@@ -43,3 +43,9 @@ def decrypt(cipher_text,key):
         decrypted_text = cipher.decrypt(cipher_text)
         unpadded_data = unpad(decrypted_text, AES.block_size)
         return unpadded_data.decode('utf-8')
+    
+def generate_key_from_password(password,salt):
+       # Generate a key from a password
+       
+       key = PBKDF2(password, salt, dkLen=32)
+       return key
