@@ -33,38 +33,38 @@ def readFile():
     return q,alpha
 
 def generate_private_key(q):
-    Xa = random.randint(1, q-1)
-    return Xa
+    Xa2 = random.randint(1, q-1)
+    return Xa2
 
-def generate_public_key(q, alpha):
-    Ya = pow(alpha, Xa,q)
-    return Ya
+def generate_public_key(q, alpha,Xa2):
+    Ya2 = pow(alpha, Xa2,q)
+    return Ya2
 
 def hash_message(M):
     return int(hashlib.sha1(M.encode()).hexdigest(), 16)
 
-def sign(m, q, alpha,Xa):
+def sign(m, q, alpha,Xa2):
     k = generate_k(q)
     s1 = pow(alpha, k, q)
     k_inv=mod_inverse(k,q-1);
-    s2 = k_inv * (m-Xa*s1) % (q-1)
-    return (s1, s2)
+    s2 = (k_inv * (m-Xa2*s1)) % (q-1)
+    return s1, s2
 
-def verify(alpha,m,q,Ya,s1,s2):
+def verify(alpha,m,q,Ya2,s1,s2):
     v1=pow(alpha,m,q)
-    v2= (pow(Ya,s1)*pow(s1,s2)) %q
+    v2= (pow(Ya2,s1)*pow(s1,s2)) %q
     return v1==v2
 
 
-q,alpha=readFile();
-Xa=generate_private_key(q);
-Ya=generate_public_key(q,alpha);
+q,alpha=readFile() #global keys for elgamal
+Xa2=generate_private_key(q) 
+Ya2=generate_public_key(q,alpha,Xa2)
 M="hello"
 m=hash_message(M)
 m = m % q
 # m=14
-s1,s2=sign(m,q,alpha,Xa)
-result=verify(alpha,m,q,Ya,s1,s2)
-# print(" q ",q," alpha ",alpha," Xa ",Xa," Ya ",Ya," s1 ",s1," s2 ",s2," result ",v1,v2)
+s1,s2=sign(m,q,alpha,Xa2)
+result=verify(alpha,m,q,Ya2,s1,s2)
+# print(" q ",q," alpha ",alpha," Xa2 ",Xa2," Ya2 ",Ya2," s1 ",s1," s2 ",s2," result ",v1,v2)
 print("result ",result)
 
