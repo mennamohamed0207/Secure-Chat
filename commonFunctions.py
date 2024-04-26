@@ -1,6 +1,7 @@
-from Cryptodome.Cipher import AES
-from Cryptodome.Protocol.KDF import PBKDF2
-from Cryptodome.Util.Padding import pad,unpad
+from Crypto.Cipher import AES
+from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad,unpad
 def send_msg(c,key):
     while 1:
         # Send messages from the client

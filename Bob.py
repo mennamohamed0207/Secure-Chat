@@ -1,9 +1,13 @@
-import socket
-import threading 
-from commonFunctions import *
+
 from DH import *
 from Elgamal import *
 import sys
+
+import socket
+import threading 
+from commonFunctions import generate_key_from_password,send_msg,receive_msg
+
+
 
 
 def Bob():
@@ -80,7 +84,6 @@ def Bob():
 
     threading.Thread(target=send_msg, args=(c,key)).start()
     threading.Thread(target=receive_msg, args=(c,key)).start()
-    c.close()
 
 
 if __name__ == "__main__":

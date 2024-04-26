@@ -75,7 +75,6 @@ def Alice():
     print("key AES Encryption received : ",key)
     threading.Thread(target=send_msg, args=(s,key)).start()
     threading.Thread(target=receive_msg, args=(s,key)).start()
-    s.close()
 
 if __name__ == "__main__":
     # Start the client
