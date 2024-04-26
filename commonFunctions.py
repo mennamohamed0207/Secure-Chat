@@ -12,9 +12,9 @@ def receive_msg(c,key):
     while 1:
         # Listen for messages from the client
         message=c.recv(2048)
-        if message == "exit":
-            print("the connection is closed")
-            break
+        # if message == "exit":
+        #     print("the connection is closed")
+        #     break
         # if Elgamal.verify(message)==False:
         #     print("Untrusted Connection")
         #     c.sendall("exit".encode())

@@ -44,7 +44,6 @@ def Alice():
 
     m=hash_message_elgamal(str(Ya))
     m = m % q2
-    print("m after hash",m)
     s1,s2=sign_elgamal(m,q2,alpha2,Xa2)
 
     # Send the public key and s1, s2 (signed public key)
@@ -61,11 +60,13 @@ def Alice():
     s2_b=int(s.recv(2048).decode("utf-8"))
     print("Alice received s2_b from Bob: ",s2_b)
 
-    # if not verify_elgamal(alpha2,m,q2,Ya2,s1_b,s2_b):
-    #     print("We've caught you! Terminating connection due to wrong digital signature...")
-    #     s.close()  # Close the socket
-    #     sys.exit()  # Exit the script
-    print (verify_elgamal(alpha2,Ya,q2,Ya2,s1_b,s2_b))
+    mb=hash_message_elgamal(str(Yb))
+    mb = mb % q2
+    if not verify_elgamal(alpha2,mb,q2,Yb2,s1_b,s2_b):
+        print("We've caught you! Terminating connection due to wrong digital signature...")
+        s.close()  # Close the socket
+        sys.exit()  # Exit the script
+    # print (verify_elgamal(alpha2,mb,q2,Yb2,s1_b,s2_b))
 
 
     ka=symmetricKey(Xa,Yb,q)

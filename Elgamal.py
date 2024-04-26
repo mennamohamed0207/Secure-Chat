@@ -53,12 +53,11 @@ def sign_elgamal(m, q, alpha,Xa2):
     s2 = (k_inv * (m-Xa2*s1)) % (q-1)
     return s1, s2
 
-def verify_elgamal(alpha,m,q,Ya2,s1,s2):
-    v1=pow(alpha,m,q)
-    # v2=(pow(Ya2,s1)*pow(s1,s2)) %q
-    v2 = (pow(alpha, s1, q) * pow(s1, s2, q)) % q
+def verify_elgamal(alpha, m, q, Ya2, s1, s2):
+    v1 = pow(alpha, m, q)
+    v2 = (pow(Ya2, s1, q) * pow(s1, s2, q)) % q
 
-    return v1,v2
+    return v1, v2
 
 
 # q,alpha=readFile_elgamal() #global keys for elgamal

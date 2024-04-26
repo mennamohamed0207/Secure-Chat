@@ -49,7 +49,6 @@ def Bob():
 
     m=hash_message_elgamal(str(Yb))
     m = m % q2
-    print("m after hash",m)
     s1,s2=sign_elgamal(m,q2,alpha2,Xb2)
 
     # Receive the secret key from the server
@@ -66,11 +65,13 @@ def Bob():
     c.sendall(str(s2).encode("utf-8"))
     print("Bob sent your s2 public key signed to Alice : ",s2)
 
-    # if not verify_elgamal(alpha2,m,q2,Yb2,s1_a,s2_a):
-    #     print("We've caught you! Terminating connection due to wrong digital signature...")
-    #     s.close()  # Close the socket
-    #     sys.exit()  # Exit the script
-    print(verify_elgamal(alpha2,Yb,q2,Yb2,s1_a,s2_a))
+    ma=hash_message_elgamal(str(Ya))
+    ma = ma % q2
+    if not verify_elgamal(alpha2,ma,q2,Ya2,s1_a,s2_a):
+        print("We've caught you! Terminating connection due to wrong digital signature...")
+        s.close()  # Close the socket
+        sys.exit()  # Exit the script
+    # print(verify_elgamal(alpha2,ma,q2,Ya2,s1_a,s2_a))
 
     kb=symmetricKey(Xb,Ya,q)
     print("Your symmetric DH key: ",kb)
