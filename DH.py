@@ -43,7 +43,7 @@ def readFile():
     return q,pr
 
 def publicKey(x,pr,q):
-    y=pow(pr,x)%q #alic public key
+    y=pow(pr,x)%q #alice public key
     return y
 
 def symmetricKey(x,y,q):

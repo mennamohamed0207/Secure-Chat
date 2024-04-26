@@ -1,4 +1,6 @@
-from server import *
+from Cryptodome.Cipher import AES
+from Cryptodome.Protocol.KDF import PBKDF2
+from Cryptodome.Util.Padding import pad,unpad
 def send_msg(c,key):
     while 1:
         # Send messages from the client
@@ -13,10 +15,10 @@ def receive_msg(c,key):
         if message == "exit":
             print("the connection is closed")
             break
-        if ElGamal.verify(message)==False:
-            print("Untrusted Connection")
-            c.sendall("exit".encode())
-            break
+        # if Elgamal.verify(message)==False:
+        #     print("Untrusted Connection")
+        #     c.sendall("exit".encode())
+        #     break
         print("You RECEIVED:",decrypt(message,key))
     c.close() 
 
