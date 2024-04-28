@@ -66,8 +66,6 @@ def Alice():
         print("We've caught you! Terminating connection due to wrong digital signature...")
         s.close()  # Close the socket
         sys.exit()  # Exit the script
-    # print (verify_elgamal(alpha2,mb,q2,Yb2,s1_b,s2_b))
-
 
     ka=symmetricKey(Xa,Yb,q)
     print("Alice's symmetric DH key: ",ka)
