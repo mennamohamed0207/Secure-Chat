@@ -75,7 +75,6 @@ def Bob():
         print("We've caught you! Terminating connection due to wrong digital signature...")
         s.close()  # Close the socket
         sys.exit()  # Exit the script
-    # print(verify_elgamal(alpha2,ma,q2,Ya2,s1_a,s2_a))
 
     kb=symmetricKey(Xb,Ya,q)
     print("Your symmetric DH key: ",kb)

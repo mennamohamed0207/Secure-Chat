@@ -1,3 +1,5 @@
+import random
+
 # def primeChecker(q):
 #     if q < 1:
 #         return -1
@@ -50,14 +52,15 @@ def symmetricKey(x,y,q):
     k=pow(y,x)%q #symmetric private key
     return k
 def readX(q):
-    while(1):
-        x=int(input("Enter your private key: "))
-        if isinstance(x,int)==False and x>=q:
-            print("Invalid private key")
-            break
-        else:
-            x=int(x)
-            return x
+    # while(1):
+    #     x=int(input("Enter your private key: "))
+    #     if isinstance(x,int)==False and x>=q:
+    #         print("Invalid private key")
+    #         break
+    #     else:
+    #         x=int(x)
+    x = random.randint(1, q-1)
+    return x
     
     
 # ya=publicKey(4,pr,q)
