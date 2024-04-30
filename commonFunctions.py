@@ -2,6 +2,8 @@ from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad,unpad
+import hashlib
+
 def send_msg(c,key):
     while 1:
         # Send messages from the client
@@ -49,6 +51,6 @@ def decrypt(cipher_text,key):
     
 def generate_key_from_password(password,salt):
        # Generate a key from a password
-       
-       key = PBKDF2(password, salt, dkLen=32)
-       return key
+    password_str = str(password)
+    key = hashlib.sha256(password_str.encode()).digest()
+    return key
