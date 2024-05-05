@@ -21,7 +21,7 @@ pip install pycryptodomex
 <div name="How to run Chat">
   
 ## How to run Chat 
-*run Bob.py at first 
-*then run Alice.py second 
+* run Bob.py at first 
+* then run Alice.py second 
 and then you can start your chat session 🥳
     
