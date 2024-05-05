@@ -22,6 +22,16 @@ pip install pycryptodomex
   
 ## How to run Chat 
 * run Bob.py at first 
-* then run Alice.py second 
-and then you can start your chat session 🥳
-    
+* then run Alice.py second
+<br><br/>
+**and then you can start your chat session** 🥳
+
+<!-- #CTF Solutions -->
+<div name="CTF Solutions">
+
+
+
+ ## CTF Solutions
+ * You can find the solutions to the CTF with the steps in the following document
+ https://docs.google.com/document/d/1RKOnuFdqelcU8mKjlD1rsKan4I8nzNOAFSvhu7DUrd4/edit#heading=h.33x40x6cnfjv
+
