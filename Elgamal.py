@@ -59,7 +59,7 @@ def verify_elgamal(alpha, m, q, Ya2, s1, s2):
 
     return v1, v2
 
-
+#main to test el gamal algorithm individually
 # q,alpha=readFile_elgamal() #global keys for elgamal
 # Xa2=generate_private_key_elgamal(q) 
 # Ya2=generate_public_key_elgamal(q,alpha,Xa2)
