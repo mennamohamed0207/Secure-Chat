@@ -8,14 +8,22 @@ def send_msg(c,key):
     while 1:
         # Send messages from the client
         message = input()
-        message = encrypt(message,key)
-        c.sendall(message)
+        message_encrypted = encrypt(message,key)
+        c.sendall(message_encrypted)
+        if message =="exit":
+            print("Chat is closed")
+            c.close()
 
 def receive_msg(c,key):
     while 1:
         # Listen for messages from the client
         message=c.recv(2048)
-        print("You RECEIVED:",decrypt(message,key))
+        message_decrypted=decrypt(message,key)
+        # if decrypt(message,key) =="exit":
+        #     print("Chat is closed")
+        #     c.close()
+        print("You RECEIVED:",message_decrypted) 
+       
     c.close() 
 
 def recieve_key(c):
